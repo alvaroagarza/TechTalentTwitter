@@ -8,6 +8,16 @@
 
 <body>
 	<div th:replace="fragments/navbar"></div>
+	<div class="dropdown show">
+  <a class="btn btn-info dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Filter Tweets
+  </a>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="/tweets">All</a>
+    <a class="dropdown-item" href="/tweets?filter=following">Following</a>
+  </div>
+</div>
     <div class="container-fluid">
         <h2>Tweets</h2>
         <div th:each="tweet:${tweetList}">
@@ -16,14 +26,17 @@
             <h5><a style="color: #1da1f2;" class="username"
 							th:href="@{/users/} + ${tweet.user.username}"> @<span
 							th:text="${tweet.user.username}"></span>
-						</a></h5>
+						</a><small th:text="${tweet.date}"></small></h5>
             <p th:utext="${tweet.message}"></p>
             </li>
             </ul>
     	</div>
-    	<div th:if="${#lists.isEmpty(tweetList)}">
-			<h3>No tweets have been created yet</h3>
-		</div>
+    	<div th:if="${#lists.isEmpty(tweetList) and filter == 'all'}">
+   	 <h3>No tweets have been created yet</h3>
+	</div>
+	<div th:if="${#lists.isEmpty(tweetList) and filter == 'following'}">
+    <h3>No tweets have been created by your followers</h3>
+	</div>
     </div>
     <script th:replace="fragments/scripts"></script>
 </body>
