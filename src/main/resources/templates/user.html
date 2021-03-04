@@ -11,12 +11,17 @@
 	
 	
 	  <h2>Profile for <span th:text="${user.firstName}"></span> 
-	      <form th:action="@{/follow/} + ${user.username}" th:if="${!following}" method="post">
-    <button style="float:right" type="Submit" class="btn btn-lg btn-success">Follow</button>
-	</form>
-	<form th:action="@{/unfollow/} + ${user.username}" th:if="${following}" method="post">
-    <button style="float:right" type="Submit" class="btn btn-lg btn-primary unfollow_btn">Following</button>
-	</form>
+	     	
+	   		<form th:if="${!following && !isSelfPage}"
+			th:action="@{/follow/} + ${user.username}" method="post">
+			<button style="float: right;" type="Submit"
+				class="btn btn-lg btn-primary">Follow</button>
+		</form>
+		<form th:if="${following && !isSelfPage}"
+			th:action="@{/unfollow/} + ${user.username}" method="post">
+			<button style="float: right;" type="Submit"
+				class="btn btn-lg btn-primary unfollow_btn">Following</button>
+		</form>
 	  
 	<span th:text="${user.lastName}"></span>  <span style="color: #00aced">
 	@<span th:text="${user.username}"></span></span></h2> 
@@ -38,7 +43,7 @@
         </div>
     </div>
     
-
+ 
 
     <script th:replace="fragments/scripts"></script>
 </body>
